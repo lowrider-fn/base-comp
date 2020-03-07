@@ -43,9 +43,9 @@ export class Select extends VueComponent<Props> {
 		e?.stopPropagation()
 		this.isShow = !this.isShow
 		if(!this.isShow ){
-			const findEqualValue = this.options.find((el: Option) => el.value === this.search)
-			this.search = findEqualValue?.value || ''
+			this.search = this.hasOptionSearch?.value || ''
 		}
+
 	}
 	get getOptions(){
 		return this.hasOptionSearch ? 'options' : 'filteredOptions'
@@ -70,6 +70,7 @@ export class Select extends VueComponent<Props> {
 		if(this.hasOptionSearch){
 			this.$emit('input',this.hasOptionSearch.id)
 			this.$emit('change',this.hasOptionSearch.id)
+			this.toggleIsShow()
 		}
 		else{
 			this.$emit('input','')
