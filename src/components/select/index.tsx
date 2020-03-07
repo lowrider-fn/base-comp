@@ -5,6 +5,7 @@ import { Input } from '../input'
 
 import styles from './select.css?module'
 
+export{ styles }
 import { VueComponent } from '@/shims-vue'
 
 type Size = 'm' | 'l' 

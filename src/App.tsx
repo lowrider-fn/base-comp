@@ -5,6 +5,7 @@ import styles from './app.css?module'
 
 import { Modal } from '@/components/modal'
 import { Select,Option } from '@/components/select'
+import { Input,datePeriod,time, date  } from '@/components/input'
 @Component
 export default class App extends Vue {
 
@@ -56,10 +57,15 @@ export default class App extends Vue {
 
 	selected: number|string =''
 
-	get error (){
+	get errorSelect (){
 		return this.selected ? '':'Ошибка'
 	}
 
+	val='vcxvxcvcx'
+
+	get errorInput (){
+		return this.val ? '':'Ошибка'
+	}
 	render() {
 		return (
 			<section class={['app',styles.app]}>
@@ -89,14 +95,34 @@ export default class App extends Vue {
 
 					</div>
 					<div class={styles.appBox}>
+						<p>
+							{this.selected}
+						</p>
 						<Select
 							v-model={this.selected}
 							options={this.options}
 							selected={this.selected}
 							placeholder={'Выберите'}
-							label={'Пример селекта'}
-							error={this.error}
+							label={'Селект'}
+							error={this.errorSelect}
 						/>
+					</div>
+					<div class={styles.appBox}>
+						<p>
+							{this.val}
+						</p>
+						<Input
+							value={this.val}
+							error={this.errorInput}
+							v-model={this.val}
+							label={'Инпут'}
+							placeholder={'Текст'}
+							iMask={date}
+						>
+							<span class={styles.icon}>
+							x
+							</span>
+						</Input>
 					</div>
 				</div>
 			</section>

@@ -1,4 +1,4 @@
-import { Component,Prop } from 'vue-property-decorator'
+import { Component,Prop,Watch } from 'vue-property-decorator'
 
 import styles from './input.css?module'
 import { datePeriod,date,time,IMask,createMask } from './masks'
@@ -25,6 +25,10 @@ interface Props {
 
 @Component
 export class Input extends VueComponent<Props> {
+	$refs!: {
+		input: HTMLInputElement
+	}
+
 	@Prop() placeholder!: Props['placeholder']
 	@Prop() value!: Props['value']
 	@Prop({ default:'m' }) size!: Size
@@ -37,14 +41,30 @@ export class Input extends VueComponent<Props> {
 		return this.iMask ?  createMask(this.iMask) : null
 	}
 
-	get inputVal(){
-		return this.masker?.resolve(String(this.value)) || this.value 
+	maskedValue(value: string ) {
+		if (this.masker) {
+			return this.masker.resolve(value)
+		}
+		return value
 	}
 
-	set inputVal(val){
-		this.$emit('input',this.masker?.resolve(String(val)) || val )
+	setInput(val: string | number){
+		const value = this.maskedValue(String(val).trim()) || ''
+		this.$refs.input.value = value 
+		console.log(value)
+		
+		this.$emit('input',value)
 	}
 
+	mounted(){
+		this.setInput(this.value)
+	}
+
+	@Watch('value')
+	onValueChange(val: string){
+		this.$refs.input.value = val
+	}
+	
 	render() {
 		return (
 			<div
@@ -58,14 +78,13 @@ export class Input extends VueComponent<Props> {
 				)}
 				<div class={styles.inputBox}>
 					<input
-						v-model={this.inputVal}
-						value={this.inputVal}
+						ref='input'
 						readOnly={this.readonly}
 						class={[styles.input,
 							{ [styles.inputErrot]:this.error }]}
 						type='text'
 						placeholder={this.placeholder}
-						onInput={(e: any)=>this.$emit('input',e.target.value)}
+						onInput={(e: any)=>this.setInput(e.target.value as string)}
 						onFocus={(e: Event)=>this.$emit('focus',e)}
 						onBlur={(e: Event)=>this.$emit('blur',e)}
 						onClick={(e: Event)=>this.$emit('click',e)}
