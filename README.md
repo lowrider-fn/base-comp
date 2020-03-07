@@ -17,6 +17,22 @@ npm run build
 ### Как использовать
 
 #### Modal
+```ts
+type PopupWidth = 's' | 'm' | 'l' | 'fitContent'
+
+interface Props {
+	isShow: boolean
+	title?: string
+	size?: PopupWidth
+	onClose: () => void
+	scopedSlots?: {
+		head?: () => VNode
+		body?: () => VNode
+		bottom?: () => VNode
+	}
+}
+```
+
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
 import { Modal } from '@/components/modal'
@@ -81,6 +97,26 @@ export default class App extends Vue {
 ```
 
 #### Select
+```ts
+type Size = 'm' | 'l' 
+
+export interface Option{
+	id: number|string
+	value: string
+}
+
+interface Props {
+	size?: string
+	options: Array<Option>
+	error?: string
+	selected: number|string
+	placeholder?: string
+	label?: string
+	onChange?: (e: number|string) => void
+	onClose?: () => void
+}
+```
+
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
 import { Select, styles, Option } from '@/components/select'
@@ -121,6 +157,25 @@ export default class App extends Vue {
 ```
 
 #### Input
+```ts
+type Size = 'm' | 'l' 
+
+interface Props {
+	label?: string
+	size?: Size
+	value: string | number
+	placeholder?: string
+	error?: string
+	readonly?: boolean
+	iMask?: IMask.AnyMaskedOptions
+	onInput?: (e: string) => void
+	onFocus?: (e?: Event) => void
+	onBlur?: (e?: Event) => void
+	onClick?: (e?: Event) => void
+	onMousedown?: (e?: Event) => void
+}
+```
+
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
 import { Input, datePeriod, time, date  } from '@/components/input'
