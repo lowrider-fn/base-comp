@@ -1,0 +1,57 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+
+  display: flex;
+
+  background: rgba(3, 8, 13, 0.6);
+  backdrop-filter: blur(0.8);
+}
+
+.modal {
+  position: relative;
+
+  display: grid;
+  grid-row-gap: 25px;
+  justify-content: space-between;
+  min-height: 300px;
+  margin: auto;
+  padding: 40px 48px;
+  border-radius: 4px;
+  background-color: #FFF;
+}
+
+
+.title {
+  margin: 0;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 35px;
+  transform: rotateZ(45deg);
+  cursor: pointer;
+  color: rgb(238, 92, 92);
+}
+
+.s {
+  width: 470px;
+}
+
+.m {
+  width: 570px;
+}
+
+.l {
+  width: 670px;
+}
+
+.fitContent {
+  min-width: 320px;
+}

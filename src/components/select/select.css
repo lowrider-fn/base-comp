@@ -1,0 +1,58 @@
+/* select */
+
+.select {
+  position: relative;
+  width: 300px;
+}
+
+.dropdown {
+  width: 100%;
+  position: absolute;
+  top: 100%;
+  z-index: 11;
+  max-height: 200px;
+  overflow: auto;
+  box-shadow: 0 4px 16px rgba(0, 26, 52, 0.1);
+  background-color: #FFF;
+}
+
+.option {
+  padding: 8px 16px;
+  transition: all 0.3s linear;
+  background-color: #FFF;
+  border-bottom: 1px solid rgb(182, 181, 181);
+  cursor: pointer;
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option:hover,
+.active {
+  color: #FFF;
+  background-color: rgb(83, 130, 233);
+}
+
+.iconArrow {
+  position: absolute;
+  right: 12px;
+  transform: rotateZ(90deg);
+  transition: all 0.3s linear;
+}
+
+.iconArrow.open {
+  transform: rotateZ(270deg);
+}
+
+.m .option {
+  font-size: 14px;
+  line-height: 14px;
+  padding: 8px 12px;
+}
+
+.l .option {
+  font-size: 16px;
+  line-height: 20px;
+  padding: 8px 16px;
+}

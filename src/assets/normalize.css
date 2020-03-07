@@ -1,0 +1,65 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+  
+  
+body ,
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  color: black;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+  
+button {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: transparent;
+  transition: all 0.3s linear;
+  appearance: none;
+  text-decoration: none;
+}
+  
+a {
+  transition: all 0.3s linear;
+  text-decoration: none;
+}
+  
+figure,pre {
+  margin: 0;
+}
+  
+  
+input {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  appearance: none;
+}
+  
+textarea {
+  margin: 0;
+  padding: 0;
+  border: none;
+  overflow: auto;
+  outline: none;
+  box-shadow: none;
+  resize: none;
+}
+  
+.app {
+  height: 100%;
+}
