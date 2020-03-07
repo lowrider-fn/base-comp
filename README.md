@@ -1,4 +1,4 @@
-# Todo planner. [Demo](https://lowrider-fn.github.io/todo-planner/)
+# Base comp. [Demo](https://lowrider-fn.github.io/base-comp/)
 
 ## Project setup
 ```
