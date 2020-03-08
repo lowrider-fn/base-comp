@@ -180,7 +180,6 @@ interface Props {
 }
 ```
 
-
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
 import { Input, datePeriod, time, date  } from '@/components/field'
