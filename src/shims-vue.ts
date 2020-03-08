@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 type CSSClass = (string | {
-	[key: string]: string
+	[key: string]: string | boolean
 })
 
 export class VueComponent<Props = {}> extends Vue {

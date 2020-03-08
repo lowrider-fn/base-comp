@@ -2,7 +2,6 @@
 
 .select {
   position: relative;
-  width: 300px;
 }
 
 .dropdown {
@@ -12,7 +11,7 @@
   z-index: 11;
   max-height: 200px;
   overflow: auto;
-  box-shadow: 0 4px 16px rgba(0, 26, 52, 0.1);
+  box-shadow: 0px 4px 16px rgba(0, 26, 52, 0.1);
   background-color: #FFF;
 }
 
@@ -20,8 +19,10 @@
   padding: 8px 16px;
   transition: all 0.3s linear;
   background-color: #FFF;
-  border-bottom: 1px solid rgb(182, 181, 181);
+  border-bottom: 1px solid #EAEDEF;
   cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .option:last-child {
@@ -30,19 +31,18 @@
 
 .option:hover,
 .active {
-  color: #FFF;
-  background-color: rgb(83, 130, 233);
+  background-color: #E5EFFF;
 }
 
 .iconArrow {
   position: absolute;
   right: 12px;
-  transform: rotateZ(90deg);
+  transform: rotateZ(0);
   transition: all 0.3s linear;
 }
 
 .iconArrow.open {
-  transform: rotateZ(270deg);
+  transform: rotateZ(180deg);
 }
 
 .m .option {
@@ -52,7 +52,9 @@
 }
 
 .l .option {
-  font-size: 16px;
-  line-height: 20px;
-  padding: 8px 16px;
+  padding: 12px;
+}
+
+.xl .option {
+  padding: 14px 16px;
 }

@@ -1,14 +1,15 @@
-import { Component, Prop } from 'vue-property-decorator'
+import { Component, Prop,Watch } from 'vue-property-decorator'
 
 import { Popup } from '../popup'
-import { Input } from '../input'
+import { Input } from '../field/input'
 
+import { IconArrow } from './icon-arrow'
 import styles from './select.css?module'
 
 export{ styles }
 import { VueComponent } from '@/shims-vue'
 
-type Size = 'm' | 'l' 
+type Size = 'm' | 'l' | 'xl' 
 
 export interface Option{
 	id: number|string
@@ -39,71 +40,70 @@ export class Select extends VueComponent<Props> {
 	isShow=false
 	search=''
 
-	toggleIsShow(e?: Event){
-		e?.stopPropagation()
-		this.isShow = !this.isShow
-		if(!this.isShow ){
-			this.search = this.hasOptionSearch?.value || ''
-		}
-
-	}
-	get getOptions(){
-		return this.hasOptionSearch ? 'options' : 'filteredOptions'
-	}
-
-	get hasOptionSearch(){
-		return this.options.find((option: Option) => option.value.toLowerCase() === this.search.toLowerCase())
-	}
-	get hasOptionIs(){
-		return this.options.find((option: Option) => option.id === this.search.toLowerCase())
-	}
 	get filteredOptions(){
 		return this.options.filter((option: Option) => option.value.toLowerCase().includes(this.search.toLowerCase()))
 	}
 
-	get inputVal(): string{
-		return this.options.find((option: Option) => option.id === this.selected)?.value || this.search 
+	get foundSearchInOption(){
+		return this.options.find((option: Option) => option.value.toLowerCase() === this.search.toLowerCase())
 	}
-
-	set inputVal(val: string){
-		this.search = val
-		if(this.hasOptionSearch){
-			this.$emit('input',this.hasOptionSearch.id)
-			this.$emit('change',this.hasOptionSearch.id)
-			this.toggleIsShow()
-		}
-		else{
-			this.$emit('input','')
-			this.$emit('change','')
-		}
+	
+	get getOptions(){
+		return this.foundSearchInOption ? 'options' : 'filteredOptions'
 	}
 
 	get isReadonly(){
-		return this.options.length < 2 || !this.isShow
+		return !(this.isShow && this.options.length <25)
 	}
 
-	change(id: Option['id']){
-		this.search = this.options.find((opt: Option) => opt.id === id)?.value || ''
-		this.$emit('change',id)
-		this.$emit('input',id)
-		this.toggleIsShow()
+	@Watch('search') onSearchChange(val: string){
+		if(this.foundSearchInOption){
+			this.change(this.foundSearchInOption.id)
+		}
+		if(!val){
+			this.change('')
+		}
 	}
 	
+	mounted(){
+		this.search = this.findForId(this.selected)
+	}
+
+	findForId(id: number | string ){
+		return this.options.find((option: Option) => option.id === id)?.value || ''
+	}
+
+	toggleIsShow(e?: Event){
+		e?.stopPropagation()
+		this.isShow = !this.isShow
+		if(!this.isShow && !this.foundSearchInOption ){
+			this.search = this.findForId(this.selected)
+		}
+	}
+	
+	change(id: Option['id']){
+		if(id){
+			this.search = this.findForId(id)
+			this.isShow && this.toggleIsShow()
+		}
+
+		this.$emit('change',id)
+		this.$emit('input',id)
+	}
+
 	render() {
 		return(
 			<div class={[styles.select,styles[this.size]] }>
 				<Input
 					error={this.error}
-					value={this.inputVal}
-					v-model={this.inputVal}
+					value={this.search}
+					v-model={this.search}
 					label={this.label}
 					placeholder={this.placeholder}
 					onMousedown={this.toggleIsShow}
-					readonly={ this.isReadonly}
+					readonly={this.isReadonly}
 				>
-					<span class={[styles.iconArrow,{ [styles.open]:this.isShow }]}>
-						{'>'}
-					</span>
+					<IconArrow class={[styles.iconArrow,{ [styles.open]:this.isShow } ]}/>
 				</Input>
 				{
 					this.isShow && (

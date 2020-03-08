@@ -17,6 +17,22 @@ npm run build
 ### Как использовать
 
 #### Modal
+```ts
+type PopupWidth = 's' | 'm' | 'l' | 'fitContent'
+
+interface Props {
+	isShow: boolean
+	title?: string
+	size?: PopupWidth
+	onClose: () => void
+	scopedSlots?: {
+		head?: () => VNode
+		body?: () => VNode
+		bottom?: () => VNode
+	}
+}
+```
+
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
 import { Modal } from '@/components/modal'
@@ -81,12 +97,33 @@ export default class App extends Vue {
 ```
 
 #### Select
+```ts
+type Size = 'm' | 'l' | 'xl' 
+
+export interface Option{
+	id: number|string
+	value: string
+}
+
+interface Props {
+	size?: string
+	options: Array<Option>
+	error?: string
+	selected: number|string
+	placeholder?: string
+	label?: string
+	onChange?: (e: number|string) => void
+	onClose?: () => void
+}
+```
+
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
 import { Select, styles, Option } from '@/components/select'
 
 @Component
 export default class App extends Vue {
+
 	options: Array<Option>=[
 		{ value: 'Florida', id: 'FL' },
 		{ value: 'Georgia', id: 'GA' },
@@ -110,20 +147,43 @@ export default class App extends Vue {
 				placeholder={'Выберите'}
 				label={'Селект'}
 				error={this.errorSelect}
-			/>
-      //если нужна кастомизация options просто используйте 
-      //slot default <Select> кастомные options</Select>
-      //и импортируйте styles для optins
-      //import { styles } from '@/components/select'
+			>
+			//$slots.default
+      		</Select> 
 		)
 	}
 }
 ```
 
 #### Input
+
+```ts
+type Size = 'm' | 'l' | 'xl'
+
+interface Props {
+	isDirty?: boolean
+	readonly?: boolean
+	type?: string
+	label?: string
+	placeholder?: string
+	error?: string
+	value: string | number
+	
+	size?: Size
+	iMask?: IMask.AnyMaskedOptions
+
+	onInput?: (e: string) => void
+	onFocus?: (e?: Event) => void
+	onBlur?: (e?: Event) => void
+	onClick?: (e?: Event) => void
+	onMousedown?: (e?: Event) => void
+}
+```
+
+
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Input, datePeriod, time, date  } from '@/components/input'
+import { Input, datePeriod, time, date  } from '@/components/field'
 
 @Component
 export default class App extends Vue {
@@ -131,7 +191,7 @@ export default class App extends Vue {
 	val=''
 
 	get errorInput (){
-		return this.val ? '':'Ошибка'
+		return !this.val.trim() ? '':'Ошибка'
 	}
 
 	render() {
@@ -144,12 +204,65 @@ export default class App extends Vue {
 				placeholder={'Текст'}
 				iMask={date}
 			>
-			//slot default для кастомизации иконку разместить например
+			//$slots.default
 			</Input>
 		)
 	}
 }
 ```
 
+#### Textarea
+
+```ts
+type Size = 'm' | 'l' | 'xl'
+
+interface Props {
+	isDirty?: boolean
+	readonly?: boolean
+	label?: string
+	placeholder?: string
+	error?: string
+	value: string | number
+	
+	size?: Size
+
+	onInput?: (e: string) => void
+	onFocus?: (e?: Event) => void
+	onBlur?: (e?: Event) => void
+	onClick?: (e?: Event) => void
+	onMousedown?: (e?: Event) => void
+}
+```
+
+
+```tsx
+import { Component, Vue } from 'vue-property-decorator'
+import { Textarea  } from '@/components/field'
+
+@Component
+export default class App extends Vue {
+
+	val=''
+
+	get errorTextarea (){
+		return !this.val.trim() ? '':'Ошибка'
+	}
+
+	render() {
+		return (
+			<Textarea
+				size={'xl'}
+				value={this.val}
+				error={this.errorTextarea}
+				v-model={this.valtext}
+				label={'Textarea со слотом'}
+				placeholder={'Текст'}
+			>
+			//$slots.default
+			</Textarea>
+		)
+	}
+}
+```
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

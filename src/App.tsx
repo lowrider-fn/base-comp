@@ -5,7 +5,7 @@ import styles from './app.css?module'
 
 import { Modal } from '@/components/modal'
 import { Select,Option } from '@/components/select'
-import { Input,datePeriod,time, date  } from '@/components/input'
+import { Textarea,Input,datePeriod,time, date  } from '@/components/field'
 @Component
 export default class App extends Vue {
 
@@ -55,17 +55,27 @@ export default class App extends Vue {
 		{ value: 'New York', id: 'NY' },
 	]
 
-	selected: number|string =''
+	selected: number|string ='NY'
 
 	get errorSelect (){
 		return this.selected ? '':'Ошибка'
 	}
 
-	val='vcxvxcvcx'
+	val='31.12.1989'
 
 	get errorInput (){
-		return this.val ? '':'Ошибка'
+		return !this.val.trim() ? 'Ошибка' :''
 	}
+
+	valtext = `Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+	Cum necessitatibus eveniet laboriosam quia at? Quibusdam, quos. 
+	Libero impedit odit perspiciatis ex. 
+	Voluptate inventore minus ut sapiente vero obcaecati eius architecto.`
+
+	get errorTextarea (){
+		return !this.valtext.trim() ? 'Ошибка' :''
+	}
+
 	render() {
 		return (
 			<section class={['app',styles.app]}>
@@ -103,7 +113,7 @@ export default class App extends Vue {
 							options={this.options}
 							selected={this.selected}
 							placeholder={'Выберите'}
-							label={'Селект'}
+							label={'Select'}
 							error={this.errorSelect}
 						/>
 					</div>
@@ -115,7 +125,7 @@ export default class App extends Vue {
 							value={this.val}
 							error={this.errorInput}
 							v-model={this.val}
-							label={'Инпут'}
+							label={'Input даты со слотом'}
 							placeholder={'Текст'}
 							iMask={date}
 						>
@@ -123,6 +133,23 @@ export default class App extends Vue {
 							x
 							</span>
 						</Input>
+					</div>
+					<div class={styles.appBox}>
+						<p>
+							{this.valtext}
+						</p>
+						<Textarea
+							size={'xl'}
+							value={this.valtext}
+							error={this.errorTextarea}
+							v-model={this.valtext}
+							label={'Textarea со слотом'}
+							placeholder={'Текст'}
+						>
+							<span class={styles.icon}>
+							x
+							</span>
+						</Textarea>
 					</div>
 				</div>
 			</section>

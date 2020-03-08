@@ -1,0 +1,84 @@
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.fieldBox {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.area {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+  border: 2px solid rgb(220, 220, 220);
+  border-radius: 3px;
+  transition: all 0.3s linear;
+  color: #001A34;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+.label {
+  font-size: 14px;
+  line-height: 18px;
+  color: #808D9A;
+}
+
+.textarea {
+  padding: 5.5px 12px;
+
+}
+
+.m .input {
+  font-size: 14px;
+  line-height: 18px;
+  padding: 5.5px 12px;
+}
+
+.m .textarea {
+  font-size: 14px;
+  line-height: 18px;
+  height: 63px;
+}
+
+.l .input {
+  padding: 8px 12px;
+}
+
+.l .textarea {
+  height: 84px;
+}
+
+.xl .input {
+  padding: 14px 12px 14px;
+}
+
+.xl .textarea {
+  height: 94px;
+}
+
+.area:focus,
+.area:hover {
+  border-color: rgb(82, 154, 236);
+}
+
+.fieldErr  .area,
+.fieldErr .area:focus,
+.fieldErr .input:hover {
+  border-color: rgb(238, 92, 92);
+}
+
+.error {  
+  position: absolute;
+  top: 100%;
+  font-size: 12px;
+  color: rgb(238, 92, 92);
+}
+
+
+
+
