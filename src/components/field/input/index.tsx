@@ -12,6 +12,8 @@ type Size = 'm' | 'l' | 'xl'
 interface Props {
 	isDirty?: boolean
 	readonly?: boolean
+	disabled?: boolean
+	
 	type?: string
 	label?: string
 	placeholder?: string
@@ -37,6 +39,7 @@ export class Input extends VueComponent<Props> {
 
 	@Prop({ default:false }) isDirty!: boolean
 	@Prop({ default:false }) readonly!: boolean
+	@Prop({ default:false }) disabled!: boolean
 
 	@Prop({ default:'text' }) type!: string
 	@Prop() label!: Props['label']
@@ -47,14 +50,19 @@ export class Input extends VueComponent<Props> {
 	@Prop({ default:'m' }) size!: Size
 	@Prop() iMask!: Props['iMask']
 
-	id = ''
-	
+	id = `f${(~~(Math.random()*1e8)).toString(16)}`
+	dirty = false
+
 	get masker() {
 		return this.iMask ?  createMask(this.iMask) : null
 	}
-
+	
+	get isErr(){
+		return this.error && this.dirty
+	}
+	
 	mounted(){
-		this.id = `f${(~~(Math.random()*1e8)).toString(16)}`
+		this.setDirty(this.isDirty)
 		this.setInput(this.value)
 	}
 
@@ -71,6 +79,15 @@ export class Input extends VueComponent<Props> {
 		return String(val)
 	}
 
+	setDirty(val: boolean){
+		this.dirty = val
+	}
+	
+	focusHandler(e?: Event){
+		this.setDirty(true)
+		this.$emit('focus',e)
+	}
+
 	@Watch('value')
 	onValueChange(val: string){
 		this.setInput(val)
@@ -81,7 +98,7 @@ export class Input extends VueComponent<Props> {
 			<div
 				class={[styles.field,
 					styles[this.size],
-					{ [styles.fieldErr]:!!this.error },
+					{ [styles.fieldErr]:this.isErr },
 				]}
 			>
 				{this.label &&(
@@ -98,18 +115,21 @@ export class Input extends VueComponent<Props> {
 						id={this.id}
 						ref='input'
 						readOnly={this.readonly}
-						class={[styles.input,styles.area]}
+						class={[styles.input,
+							styles.area,
+							{ [styles.disabled]:this.disabled },
+						]}
 						type={this.type}
 						placeholder={this.placeholder}
 						onInput={(e: any)=>this.setInput(e.target.value as string)}
-						onFocus={(e: Event)=>this.$emit('focus',e)}
+						onFocus={(e: Event)=>this.focusHandler(e)}
 						onBlur={(e: Event)=>this.$emit('blur',e)}
 						onClick={(e: Event)=>this.$emit('click',e)}
 						onMousedown={(e: Event)=>this.$emit('mousedown',e)}
 					/>	
 					{this.$slots.default}	
 				</div>
-				{this.error && (
+				{this.isErr && (
 					<div class={styles.error}>
 						{this.error}
 					</div>

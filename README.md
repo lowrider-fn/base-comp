@@ -18,12 +18,12 @@ npm run build
 
 #### Modal
 ```ts
-type PopupWidth = 's' | 'm' | 'l' | 'fitContent'
+type Width = 's' | 'm' | 'l' | 'fit'
 
 interface Props {
 	isShow: boolean
 	title?: string
-	size?: PopupWidth
+	size?: Width
 	onClose: () => void
 	scopedSlots?: {
 		head?: () => VNode
@@ -100,12 +100,13 @@ export default class App extends Vue {
 ```ts
 type Size = 'm' | 'l' | 'xl' 
 
-export interface Option{
+interface Option{
 	id: number|string
 	value: string
 }
 
 interface Props {
+	disabled?: boolean
 	size?: string
 	options: Array<Option>
 	error?: string
@@ -163,6 +164,8 @@ type Size = 'm' | 'l' | 'xl'
 interface Props {
 	isDirty?: boolean
 	readonly?: boolean
+	disabled?: boolean
+
 	type?: string
 	label?: string
 	placeholder?: string
@@ -218,6 +221,8 @@ type Size = 'm' | 'l' | 'xl'
 interface Props {
 	isDirty?: boolean
 	readonly?: boolean
+	disabled?: boolean
+
 	label?: string
 	placeholder?: string
 	error?: string

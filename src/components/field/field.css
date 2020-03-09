@@ -26,6 +26,7 @@
   font-size: 14px;
   line-height: 18px;
   color: #808D9A;
+  padding: 3px 0;
 }
 
 .textarea {
@@ -77,8 +78,14 @@
   top: 100%;
   font-size: 12px;
   color: rgb(238, 92, 92);
+  padding: 8px 0; 
 }
 
+.disabled {
+  background: #F2F3F5;
+  border: 2px solid #D6DBE0;
+  pointer-events: none;
+}
 
 
 

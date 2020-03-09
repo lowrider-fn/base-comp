@@ -17,6 +17,7 @@ export interface Option{
 }
 
 interface Props {
+	disabled?: boolean
 	size?: string
 	options: Array<Option>
 	error?: string
@@ -29,6 +30,7 @@ interface Props {
 
 @Component
 export class Select extends VueComponent<Props> {
+	@Prop({ default:false }) disabled!: boolean
 
 	@Prop() label!: Props['label']
 	@Prop() placeholder!: Props['placeholder']
@@ -95,6 +97,7 @@ export class Select extends VueComponent<Props> {
 		return(
 			<div class={[styles.select,styles[this.size]] }>
 				<Input
+					disabled={this.disabled}
 					error={this.error}
 					value={this.search}
 					v-model={this.search}

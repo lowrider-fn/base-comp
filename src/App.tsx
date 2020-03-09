@@ -61,7 +61,7 @@ export default class App extends Vue {
 		return this.selected ? '':'Ошибка'
 	}
 
-	val='31.12.1989'
+	val=''
 
 	get errorInput (){
 		return !this.val.trim() ? 'Ошибка' :''
@@ -105,9 +105,6 @@ export default class App extends Vue {
 
 					</div>
 					<div class={styles.appBox}>
-						<p>
-							{this.selected}
-						</p>
 						<Select
 							v-model={this.selected}
 							options={this.options}
@@ -116,11 +113,12 @@ export default class App extends Vue {
 							label={'Select'}
 							error={this.errorSelect}
 						/>
+						<p>
+							{this.selected}
+						</p>
 					</div>
 					<div class={styles.appBox}>
-						<p>
-							{this.val}
-						</p>
+						
 						<Input
 							value={this.val}
 							error={this.errorInput}
@@ -133,11 +131,12 @@ export default class App extends Vue {
 							x
 							</span>
 						</Input>
+						<p>
+							{this.val}
+						</p>
 					</div>
 					<div class={styles.appBox}>
-						<p>
-							{this.valtext}
-						</p>
+						
 						<Textarea
 							size={'xl'}
 							value={this.valtext}
@@ -150,6 +149,9 @@ export default class App extends Vue {
 							x
 							</span>
 						</Textarea>
+						<p>
+							{this.valtext}
+						</p>
 					</div>
 				</div>
 			</section>

@@ -9,6 +9,8 @@ type Size = 'm' | 'l' | 'xl'
 interface Props {
 	isDirty?: boolean
 	readonly?: boolean
+	disabled?: boolean
+
 	label?: string
 	placeholder?: string
 	error?: string
@@ -28,6 +30,7 @@ export class Textarea extends VueComponent<Props> {
 
 	@Prop({ default:false }) isDirty!: boolean
 	@Prop({ default:false }) readonly!: boolean
+	@Prop({ default:false }) disabled!: boolean
 
 	@Prop() label!: Props['label']
 	@Prop() placeholder!: Props['placeholder']
@@ -36,19 +39,32 @@ export class Textarea extends VueComponent<Props> {
 
 	@Prop({ default:'m' }) size!: Size
 
+	id = `f${(~~(Math.random()*1e8)).toString(16)}`
+	dirty=true
+
 	get text(){
 		return this.value
 	}
 	
 	set text(val){
-		console.log(val)
 		this.$emit('input',val)
 	}
 
-	id = ''
+	get isErr(){
+		return this.error && this.dirty
+	}
+
+	setDirty(val: boolean){
+		this.dirty = val
+	}
+
+	focusHandler(e?: Event){
+		this.setDirty(true)
+		this.$emit('focus',e)
+	}
 
 	mounted(){
-		this.id = `f${(~~(Math.random()*1e8)).toString(16)}`
+		this.setDirty(this.isDirty)
 	}
 
 	render() {
@@ -56,7 +72,7 @@ export class Textarea extends VueComponent<Props> {
 			<div
 				class={[styles.field,
 					styles[this.size],
-					{ [styles.fieldErr]:!!this.error },
+					{ [styles.fieldErr]:this.isErr },
 				]}
 			>
 				{this.label &&(
@@ -73,9 +89,12 @@ export class Textarea extends VueComponent<Props> {
 						id={this.id}
 						v-model={this.text}
 						readOnly={this.readonly}
-						class={[styles.textarea,styles.area]}
+						class={[styles.textarea,
+							styles.area,
+							{ [styles.disabled]:this.disabled },
+						]}
 						placeholder={this.placeholder}
-						onFocus={(e: Event)=>this.$emit('focus',e)}
+						onFocus={(e: Event)=>this.focusHandler(e)}
 						onBlur={(e: Event)=>this.$emit('blur',e)}
 						onClick={(e: Event)=>this.$emit('click',e)}
 						onMousedown={(e: Event)=>this.$emit('mousedown',e)}
@@ -83,7 +102,7 @@ export class Textarea extends VueComponent<Props> {
 					</textarea>
 					{this.$slots.default}	
 				</div>
-				{this.error && (
+				{this.isErr && this.dirty && (
 					<div class={styles.error}>
 						{this.error}
 					</div>

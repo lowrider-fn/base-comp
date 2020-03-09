@@ -6,12 +6,12 @@ import  styles  from './modal.css?module'
 
 import { VueComponent,VNode } from '@/shims-vue'
 
-type PopupWidth = 's' | 'm' | 'l' | 'fitContent'
+type Width = 's' | 'm' | 'l' | 'fit'
 
 interface Props {
 	isShow: boolean
 	title?: string
-	size?: PopupWidth
+	size?: Width
 	onClose: () => void
 	scopedSlots?: {
 		head?: () => VNode
@@ -24,7 +24,7 @@ interface Props {
 export class Modal extends VueComponent<Props> {
 	@Prop() isShow!: Props['isShow']
 	@Prop() title!: Props['title']
-	@Prop({ default:'s' })size!: PopupWidth
+	@Prop({ default:'s' })size!: Width
   
 	close(){
 		this.$emit('close')
