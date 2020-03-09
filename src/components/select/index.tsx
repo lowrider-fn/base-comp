@@ -34,7 +34,7 @@ export class Select extends VueComponent<Props> {
 	@Prop() placeholder!: Props['placeholder']
 	@Prop() options!: Props['options']
 	@Prop() selected!: Props['selected']
-	@Prop({ default:Size.m }) size!: Size
+	@Prop({ default:Size.l }) size!: Size
 	@Prop() error!: Props['error']
   
 	isShow=false
@@ -95,6 +95,7 @@ export class Select extends VueComponent<Props> {
 		return(
 			<div class={[styles.select,styles[this.size]] }>
 				<Input
+					size={this.size}
 					disabled={this.disabled}
 					error={this.error}
 					value={this.search}

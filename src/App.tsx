@@ -120,6 +120,7 @@ export default class App extends Vue {
 					<div class={styles.appBox}>
 						
 						<Input
+							size={Size.xl}
 							value={this.val}
 							error={this.errorInput}
 							v-model={this.val}

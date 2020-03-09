@@ -51,7 +51,7 @@ export class Input extends VueComponent<Props> {
 	@Prop() error!: Props['error']
 	@Prop() value!: Props['value']
 
-	@Prop({ default:Size.xl }) size!: Size
+	@Prop({ default: Size.l }) size!: Size
 	@Prop() iMask!: Props['iMask']
 
 	id = `f${(~~(Math.random()*1e8)).toString(16)}`

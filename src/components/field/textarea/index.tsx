@@ -41,7 +41,7 @@ export class Textarea extends VueComponent<Props> {
 	@Prop() error!: Props['error']
 	@Prop() value!: Props['value']
 
-	@Prop({ default:'m' }) size!: Size
+	@Prop({ default:Size.l }) size!: Size
 
 	id = `f${(~~(Math.random()*1e8)).toString(16)}`
 	dirty=true
