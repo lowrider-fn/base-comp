@@ -93,7 +93,6 @@ export default class App extends Vue {
 						{this.isShow && (
 							<Modal
 								title={'Заголовок или scopedSlots.head?({})'}
-								isShow={this.isShow}
 								onClose={this.toggleIsShow}
 								scopedSlots={{
 									body: () => this.body(),
