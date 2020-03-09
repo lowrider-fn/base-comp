@@ -1,17 +1,20 @@
 import { Component,Prop,Watch } from 'vue-property-decorator'
 
-import styles from '../field.css?module'
+import styles from './field.css?module'
+import { IMask,createMask } from './masks'
 
-import { datePeriod,date,time,IMask,createMask } from './masks'
-
-export { datePeriod,date,time }
 import { VueComponent } from '@/shims-vue'
 
-export enum Size {
+export enum FieldSize {
 	m='m' ,
 	l='l',
 	xl ='xl'
 } 
+
+export enum FieldTag {
+	input = 'input',
+	textarea = 'textarea',
+}
 
 interface Props {
 	isDirty?: boolean
@@ -23,8 +26,9 @@ interface Props {
 	placeholder?: string
 	error?: string
 	value: string | number
-	
-	size?: Size
+
+	tag?: FieldTag
+	size?: FieldSize
 	iMask?: IMask.AnyMaskedOptions
 
 	onInput?: (e: string) => void
@@ -35,7 +39,7 @@ interface Props {
 }
 
 @Component
-export class Input extends VueComponent<Props> {
+export class Field extends VueComponent<Props> {
 
 	$refs!: {
 		input: HTMLInputElement
@@ -51,7 +55,8 @@ export class Input extends VueComponent<Props> {
 	@Prop() error!: Props['error']
 	@Prop() value!: Props['value']
 
-	@Prop({ default: Size.l }) size!: Size
+	@Prop({ default:FieldTag.input }) tag!: FieldTag
+	@Prop({ default: FieldSize.l }) size!: FieldSize
 	@Prop() iMask!: Props['iMask']
 
 	id = `f${(~~(Math.random()*1e8)).toString(16)}`
@@ -67,7 +72,7 @@ export class Input extends VueComponent<Props> {
 	}
 	
 	get isXl(){
-		return this.size === Size.xl
+		return this.size === FieldSize.xl
 	}
 
 	mounted(){
@@ -121,28 +126,36 @@ export class Input extends VueComponent<Props> {
 							{ [styles.xlFocused]:this.isXl && this.isFocused },
 						]}
 						// eslint-disable-next-line react/no-unknown-property
-						for={this.id}
+						for={!this.isXl && this.id}
 					>
 						{this.label}
 					</label>
 				)}
 				<div class={styles.fieldBox}>
-					<input
-						id={this.id}
-						ref='input'
-						readOnly={this.readonly}
-						class={[styles.input,
-							styles.area,
-							{ [styles.disabled]:this.disabled },
-						]}
-						type={this.type}
-						placeholder={this.placeholder}
-						onInput={(e: any)=>this.setInput(e.target.value as string)}
-						onFocus={(e: Event)=>this.focusHandler(e)}
-						onBlur={(e: Event)=> this.blurHandler(e)}
-						onClick={(e: Event)=>this.$emit('click',e)}
-						onMousedown={(e: Event)=>this.$emit('mousedown',e)}
-					/>	
+					{
+						this.$createElement(this.tag, {
+							ref: 'input',
+							class:[styles.input,
+								styles.area,
+								styles[this.tag],
+								{ [styles.disabled]:this.disabled },
+							],
+							on: {
+								input:(e: any)=>this.setInput(e.target.value as string),
+								focus:(e: Event)=>this.focusHandler(e),
+								blur:(e: Event)=> this.blurHandler(e),
+								click:(e: Event)=>this.$emit('click',e),
+								mousedown:(e: Event)=>this.$emit('mousedown',e),
+							},
+							attrs: {
+							
+								id:this.id,
+								type:this.type,
+								placeholder: this.placeholder,
+								readonly:this.readonly,
+							},
+						})
+					}
 					{this.$slots.default}	
 				</div>
 				{this.isErr && (

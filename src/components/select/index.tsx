@@ -1,12 +1,12 @@
 import { Component, Prop,Watch } from 'vue-property-decorator'
 
 import { Popup } from '../popup'
-import { Input,Size } from '../field/input'
+import { Field,FieldSize } from '../field'
 
 import { IconArrow } from './icon-arrow'
 import styles from './select.css?module'
 
-export{ styles ,Size }
+export{ styles ,FieldSize }
 import { VueComponent } from '@/shims-vue'
 
 export interface Option{
@@ -16,7 +16,7 @@ export interface Option{
 
 interface Props {
 	disabled?: boolean
-	size?: string
+	size?: FieldSize
 	options: Array<Option>
 	error?: string
 	selected: number|string
@@ -34,7 +34,7 @@ export class Select extends VueComponent<Props> {
 	@Prop() placeholder!: Props['placeholder']
 	@Prop() options!: Props['options']
 	@Prop() selected!: Props['selected']
-	@Prop({ default:Size.l }) size!: Size
+	@Prop({ default:FieldSize.l }) size!: FieldSize
 	@Prop() error!: Props['error']
   
 	isShow=false
@@ -94,7 +94,7 @@ export class Select extends VueComponent<Props> {
 	render() {
 		return(
 			<div class={[styles.select,styles[this.size]] }>
-				<Input
+				<Field
 					size={this.size}
 					disabled={this.disabled}
 					error={this.error}
@@ -106,7 +106,7 @@ export class Select extends VueComponent<Props> {
 					readonly={this.isReadonly}
 				>
 					<IconArrow class={[styles.iconArrow,{ [styles.open]:this.isShow } ]}/>
-				</Input>
+				</Field>
 				{
 					this.isShow && (
 						<Popup

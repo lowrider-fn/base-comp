@@ -124,7 +124,7 @@ interface Props {
 
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Select, styles, Option,Size } from '@/components/select'
+import { Select, styles, Option,FieldSize } from '@/components/select'
 
 @Component
 export default class App extends Vue {
@@ -147,10 +147,11 @@ export default class App extends Vue {
 		return (
 			<Select
 				v-model={this.selected}
+				size={FieldSize.xl}
 				options={this.options}
 				selected={this.selected}
 				placeholder={'Выберите'}
-				label={'Селект'}
+				label={'Select'}
 				error={this.errorSelect}
 			>
 			//$slots.default
@@ -160,13 +161,18 @@ export default class App extends Vue {
 }
 ```
 
-#### Input
+#### Field
 
 ```ts
-enum Size {
+enum FieldSize {
 	m = 'm' 
 	l = 'l' 
 	xl = 'xl'
+}
+
+enum FieldTag {
+	input = 'input',
+	textarea = 'textarea',
 }
 
 interface Props {
@@ -179,8 +185,9 @@ interface Props {
 	placeholder?: string
 	error?: string
 	value: string | number
-	
-	size?: Size
+
+	tag?: FieldTag
+	size?: FieldSize
 	iMask?: IMask.AnyMaskedOptions
 
 	onInput?: (e: string) => void
@@ -193,7 +200,7 @@ interface Props {
 
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Input, datePeriod, time, date,Size  } from '@/components/field'
+import { Field, datePeriod, time, date,number,FieldSize,FieldTag  } from '@/components/field'
 
 @Component
 export default class App extends Vue {
@@ -206,79 +213,22 @@ export default class App extends Vue {
 
 	render() {
 		return (
-			<Input
+			<Field
+				tag={FieldTag.textarea}
+				size={FieldSize.xl}
 				value={this.val}
 				error={this.errorInput}
 				v-model={this.val}
-				label={'Инпут'}
+				label={'Input даты со слотом'}
 				placeholder={'Текст'}
 				iMask={date}
 			>
-			//$slots.default
-			</Input>
+				//slots?.default
+			</Field>
 		)
 	}
 }
 ```
 
-#### Textarea
-
-```ts
-enum Size {
-	m = 'm' 
-	l = 'l' 
-	xl = 'xl'
-}
-
-interface Props {
-	isDirty?: boolean
-	readonly?: boolean
-	disabled?: boolean
-
-	label?: string
-	placeholder?: string
-	error?: string
-	value: string | number
-	
-	size?: Size
-
-	onInput?: (e: string) => void
-	onFocus?: (e?: Event) => void
-	onBlur?: (e?: Event) => void
-	onClick?: (e?: Event) => void
-	onMousedown?: (e?: Event) => void
-}
-```
-
-
-```tsx
-import { Component, Vue } from 'vue-property-decorator'
-import { Textarea,Size  } from '@/components/field'
-
-@Component
-export default class App extends Vue {
-
-	val=''
-
-	get errorTextarea (){
-		return !this.val.trim() ? '':'Ошибка'
-	}
-
-	render() {
-		return (
-			<Textarea
-				size={size={Size.xl}}
-				value={this.val}
-				error={this.errorTextarea}
-				v-model={this.valtext}
-				label={'Textarea со слотом'}
-				placeholder={'Текст'}
-			>
-			//$slots.default
-			</Textarea>
-		)
-	}
-}
-```
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).

@@ -22,18 +22,6 @@
   line-height: 20px;
 }
 
-.label {
-  font-size: 14px;
-  line-height: 18px;
-  color: #808D9A;
-  padding: 3px 0;
-}
-
-.textarea {
-  padding: 5px 12px;
-
-}
-
 .m .input {
   font-size: 14px;
   line-height: 18px;
@@ -41,6 +29,7 @@
 }
 
 .m .textarea {
+  padding: 5px 12px;
   font-size: 14px;
   line-height: 18px;
   height: 63px;
@@ -51,6 +40,7 @@
 }
 
 .l .textarea {
+  padding: 5px 12px;
   height: 84px;
 }
 
@@ -58,21 +48,30 @@
   padding: 14px 12px 14px;
 }
 
-.xl .textarea {
-  height: 94px;
-}
-
 .xl .input:focus {
   padding: 20px 12px 8px;
+}
+
+.xl .textarea {
+  padding: 5px 12px;
+  height: 94px;
 }
 
 .xl .textarea:focus {
   padding-top: 20px;
 }
 
+.label {
+  font-size: 14px;
+  line-height: 18px;
+  color: #808D9A;
+  padding: 3px 0;
+}
+
 .xl .label {
+  transform: scale(0);
   transition: all 0.3s linear;
-  display: none;
+  opacity: 0;
   font-size: 12px;
   position: absolute;
   top: 0;
@@ -82,8 +81,11 @@
 }
 
 .xlFocused.label {
-  display: block;
+  transform: scale(1);
+  opacity: 1;
 }
+
+
 
 .area:focus,
 .area:hover {
@@ -92,7 +94,7 @@
 
 .fieldErr  .area,
 .fieldErr .area:focus,
-.fieldErr .input:hover {
+.fieldErr .area:hover {
   border-color: rgb(238, 92, 92);
 }
 
@@ -110,5 +112,12 @@
   pointer-events: none;
 }
 
+.xl .area::-webkit-input-placeholder {
+  transition: all 0.3s linear;
+  opacity: 1;
+}
 
+.xl .area:focus::-webkit-input-placeholder {
+  opacity: 0;
+}
 

@@ -48,3 +48,7 @@ export const datePeriod = {
 export const date = {
 	mask: Date,
 }
+
+export const number = {
+	mask: Number,
+}

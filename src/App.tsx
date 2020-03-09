@@ -5,7 +5,7 @@ import styles from './app.css?module'
 
 import { Modal } from '@/components/modal'
 import { Select,Option } from '@/components/select'
-import { Textarea,Input,datePeriod,time, date,Size  } from '@/components/field'
+import { Field,datePeriod,time, date,number,FieldSize,FieldTag  } from '@/components/field'
 @Component
 export default class App extends Vue {
 
@@ -119,8 +119,8 @@ export default class App extends Vue {
 					</div>
 					<div class={styles.appBox}>
 						
-						<Input
-							size={Size.xl}
+						<Field
+							size={FieldSize.xl}
 							value={this.val}
 							error={this.errorInput}
 							v-model={this.val}
@@ -131,15 +131,16 @@ export default class App extends Vue {
 							<span class={styles.icon}>
 							x
 							</span>
-						</Input>
+						</Field>
 						<p>
 							{this.val}
 						</p>
 					</div>
 					<div class={styles.appBox}>
 						
-						<Textarea
-							size={Size.xl}
+						<Field
+							tag={FieldTag.textarea}
+							size={FieldSize.xl}
 							value={this.valtext}
 							error={this.errorTextarea}
 							v-model={this.valtext}
@@ -149,7 +150,7 @@ export default class App extends Vue {
 							<span class={styles.icon}>
 							x
 							</span>
-						</Textarea>
+						</Field>
 						<p>
 							{this.valtext}
 						</p>
