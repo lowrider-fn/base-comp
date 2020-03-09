@@ -1,2 +1,2 @@
 export { Textarea } from './textarea'
-export { Input,datePeriod,time, date } from './input'
+export { Input,datePeriod,time, date,Size } from './input'

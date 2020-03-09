@@ -1,15 +1,13 @@
 import { Component, Prop,Watch } from 'vue-property-decorator'
 
 import { Popup } from '../popup'
-import { Input } from '../field/input'
+import { Input,Size } from '../field/input'
 
 import { IconArrow } from './icon-arrow'
 import styles from './select.css?module'
 
-export{ styles }
+export{ styles ,Size }
 import { VueComponent } from '@/shims-vue'
-
-type Size = 'm' | 'l' | 'xl' 
 
 export interface Option{
 	id: number|string
@@ -36,7 +34,7 @@ export class Select extends VueComponent<Props> {
 	@Prop() placeholder!: Props['placeholder']
 	@Prop() options!: Props['options']
 	@Prop() selected!: Props['selected']
-	@Prop({ default:'m' }) size!: Size
+	@Prop({ default:Size.m }) size!: Size
 	@Prop() error!: Props['error']
   
 	isShow=false

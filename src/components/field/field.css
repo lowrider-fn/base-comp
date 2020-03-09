@@ -30,14 +30,14 @@
 }
 
 .textarea {
-  padding: 5.5px 12px;
+  padding: 5px 12px;
 
 }
 
 .m .input {
   font-size: 14px;
   line-height: 18px;
-  padding: 5.5px 12px;
+  padding: 5px 12px;
 }
 
 .m .textarea {
@@ -60,6 +60,29 @@
 
 .xl .textarea {
   height: 94px;
+}
+
+.xl .input:focus {
+  padding: 20px 12px 8px;
+}
+
+.xl .textarea:focus {
+  padding-top: 20px;
+}
+
+.xl .label {
+  transition: all 0.3s linear;
+  display: none;
+  font-size: 12px;
+  position: absolute;
+  top: 0;
+  left: 12px;
+  line-height: 16px;
+  z-index: 1;
+}
+
+.xlFocused.label {
+  display: block;
 }
 
 .area:focus,

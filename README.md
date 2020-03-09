@@ -98,7 +98,11 @@ export default class App extends Vue {
 
 #### Select
 ```ts
-type Size = 'm' | 'l' | 'xl' 
+enum Size {
+	m = 'm' 
+	l = 'l' 
+	xl = 'xl'
+}
 
 interface Option{
 	id: number|string
@@ -120,7 +124,7 @@ interface Props {
 
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Select, styles, Option } from '@/components/select'
+import { Select, styles, Option,Size } from '@/components/select'
 
 @Component
 export default class App extends Vue {
@@ -159,7 +163,11 @@ export default class App extends Vue {
 #### Input
 
 ```ts
-type Size = 'm' | 'l' | 'xl'
+enum Size {
+	m = 'm' 
+	l = 'l' 
+	xl = 'xl'
+}
 
 interface Props {
 	isDirty?: boolean
@@ -185,7 +193,7 @@ interface Props {
 
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Input, datePeriod, time, date  } from '@/components/field'
+import { Input, datePeriod, time, date,Size  } from '@/components/field'
 
 @Component
 export default class App extends Vue {
@@ -216,7 +224,11 @@ export default class App extends Vue {
 #### Textarea
 
 ```ts
-type Size = 'm' | 'l' | 'xl'
+enum Size {
+	m = 'm' 
+	l = 'l' 
+	xl = 'xl'
+}
 
 interface Props {
 	isDirty?: boolean
@@ -241,7 +253,7 @@ interface Props {
 
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Textarea  } from '@/components/field'
+import { Textarea,Size  } from '@/components/field'
 
 @Component
 export default class App extends Vue {
@@ -255,7 +267,7 @@ export default class App extends Vue {
 	render() {
 		return (
 			<Textarea
-				size={'xl'}
+				size={size={Size.xl}}
 				value={this.val}
 				error={this.errorTextarea}
 				v-model={this.valtext}

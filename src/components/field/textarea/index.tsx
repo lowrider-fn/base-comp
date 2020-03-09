@@ -4,7 +4,11 @@ import styles from '../field.css?module'
 
 import { VueComponent } from '@/shims-vue'
 
-type Size = 'm' | 'l' | 'xl'
+export enum Size {
+	m='m' ,
+	l='l',
+	xl ='xl'
+} 
 
 interface Props {
 	isDirty?: boolean
@@ -41,6 +45,7 @@ export class Textarea extends VueComponent<Props> {
 
 	id = `f${(~~(Math.random()*1e8)).toString(16)}`
 	dirty=true
+	isFocused = false
 
 	get text(){
 		return this.value
@@ -54,13 +59,23 @@ export class Textarea extends VueComponent<Props> {
 		return this.error && this.dirty
 	}
 
+	get isXl(){
+		return this.size === Size['xl']
+	}
+
 	setDirty(val: boolean){
 		this.dirty = val
 	}
 
 	focusHandler(e?: Event){
+		this.isFocused = true
 		this.setDirty(true)
 		this.$emit('focus',e)
+	}
+
+	blurHandler(e?: Event){
+		this.isFocused = false
+		this.$emit('blur',e)
 	}
 
 	mounted(){
@@ -75,9 +90,11 @@ export class Textarea extends VueComponent<Props> {
 					{ [styles.fieldErr]:this.isErr },
 				]}
 			>
-				{this.label &&(
+				{this.label && (
 					<label
-						class={[styles.label]}
+						class={[styles.label,
+							{ [styles.xlFocused]:this.isXl && this.isFocused },
+						]}
 						// eslint-disable-next-line react/no-unknown-property
 						for={this.id}
 					>
@@ -95,7 +112,7 @@ export class Textarea extends VueComponent<Props> {
 						]}
 						placeholder={this.placeholder}
 						onFocus={(e: Event)=>this.focusHandler(e)}
-						onBlur={(e: Event)=>this.$emit('blur',e)}
+						onBlur={(e: Event)=>this.blurHandler(e)}
 						onClick={(e: Event)=>this.$emit('click',e)}
 						onMousedown={(e: Event)=>this.$emit('mousedown',e)}
 					>

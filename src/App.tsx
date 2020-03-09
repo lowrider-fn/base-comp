@@ -5,7 +5,7 @@ import styles from './app.css?module'
 
 import { Modal } from '@/components/modal'
 import { Select,Option } from '@/components/select'
-import { Textarea,Input,datePeriod,time, date  } from '@/components/field'
+import { Textarea,Input,datePeriod,time, date,Size  } from '@/components/field'
 @Component
 export default class App extends Vue {
 
@@ -138,7 +138,7 @@ export default class App extends Vue {
 					<div class={styles.appBox}>
 						
 						<Textarea
-							size={'xl'}
+							size={Size.xl}
 							value={this.valtext}
 							error={this.errorTextarea}
 							v-model={this.valtext}

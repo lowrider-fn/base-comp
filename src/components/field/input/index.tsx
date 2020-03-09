@@ -7,13 +7,17 @@ import { datePeriod,date,time,IMask,createMask } from './masks'
 export { datePeriod,date,time }
 import { VueComponent } from '@/shims-vue'
 
-type Size = 'm' | 'l' | 'xl'
+export enum Size {
+	m='m' ,
+	l='l',
+	xl ='xl'
+} 
 
 interface Props {
 	isDirty?: boolean
 	readonly?: boolean
 	disabled?: boolean
-	
+
 	type?: string
 	label?: string
 	placeholder?: string
@@ -47,11 +51,12 @@ export class Input extends VueComponent<Props> {
 	@Prop() error!: Props['error']
 	@Prop() value!: Props['value']
 
-	@Prop({ default:'m' }) size!: Size
+	@Prop({ default:Size.xl }) size!: Size
 	@Prop() iMask!: Props['iMask']
 
 	id = `f${(~~(Math.random()*1e8)).toString(16)}`
 	dirty = false
+	isFocused = false
 
 	get masker() {
 		return this.iMask ?  createMask(this.iMask) : null
@@ -61,6 +66,10 @@ export class Input extends VueComponent<Props> {
 		return this.error && this.dirty
 	}
 	
+	get isXl(){
+		return this.size === Size.xl
+	}
+
 	mounted(){
 		this.setDirty(this.isDirty)
 		this.setInput(this.value)
@@ -85,7 +94,13 @@ export class Input extends VueComponent<Props> {
 	
 	focusHandler(e?: Event){
 		this.setDirty(true)
+		this.isFocused = true
 		this.$emit('focus',e)
+	}
+
+	blurHandler(e?: Event){
+		this.isFocused = false
+		this.$emit('blur',e)
 	}
 
 	@Watch('value')
@@ -98,12 +113,13 @@ export class Input extends VueComponent<Props> {
 			<div
 				class={[styles.field,
 					styles[this.size],
-					{ [styles.fieldErr]:this.isErr },
-				]}
+					{ [styles.fieldErr]:this.isErr }]}
 			>
-				{this.label &&(
+				{this.label && (
 					<label
-						class={[styles.label]}
+						class={[styles.label,
+							{ [styles.xlFocused]:this.isXl && this.isFocused },
+						]}
 						// eslint-disable-next-line react/no-unknown-property
 						for={this.id}
 					>
@@ -123,7 +139,7 @@ export class Input extends VueComponent<Props> {
 						placeholder={this.placeholder}
 						onInput={(e: any)=>this.setInput(e.target.value as string)}
 						onFocus={(e: Event)=>this.focusHandler(e)}
-						onBlur={(e: Event)=>this.$emit('blur',e)}
+						onBlur={(e: Event)=> this.blurHandler(e)}
 						onClick={(e: Event)=>this.$emit('click',e)}
 						onMousedown={(e: Event)=>this.$emit('mousedown',e)}
 					/>	
