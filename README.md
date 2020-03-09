@@ -40,7 +40,7 @@ interface Props {
 
 @Prop() title!: Props['title']
 
-@Prop({ default:'s' })size!: ModalWidth
+@Prop({ default: ModalWidth.s })size!: ModalWidth
 ```
 
 ```tsx
