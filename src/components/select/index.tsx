@@ -16,26 +16,31 @@ export interface Option{
 
 interface Props {
 	disabled?: boolean
+	
 	size?: FieldSize
 	options: Array<Option>
+
 	error?: string
 	selected: number|string
 	placeholder?: string
 	label?: string
+
 	onChange?: (e: number|string) => void
 	onClose?: () => void
 }
 
 @Component
 export class Select extends VueComponent<Props> {
+	
 	@Prop({ default:false }) disabled!: boolean
 
 	@Prop() label!: Props['label']
 	@Prop() placeholder!: Props['placeholder']
 	@Prop() options!: Props['options']
 	@Prop() selected!: Props['selected']
-	@Prop({ default:FieldSize.l }) size!: FieldSize
 	@Prop() error!: Props['error']
+
+	@Prop({ default:FieldSize.l }) size!: FieldSize
   
 	isShow=false
 	search=''

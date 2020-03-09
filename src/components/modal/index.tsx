@@ -6,12 +6,17 @@ import  styles  from './modal.css?module'
 
 import { VueComponent,VNode } from '@/shims-vue'
 
-type Width = 's' | 'm' | 'l' | 'fit'
-
+export enum ModalWidth{
+	s='s',
+	m='m',
+	l='l',
+	fit='fit'
+}
 interface Props {
-	isShow: boolean
 	title?: string
-	size?: Width
+
+	size?: ModalWidth
+
 	onClose: () => void
 	scopedSlots?: {
 		head?: () => VNode
@@ -22,9 +27,10 @@ interface Props {
 
 @Component
 export class Modal extends VueComponent<Props> {
-	@Prop() isShow!: Props['isShow']
+
 	@Prop() title!: Props['title']
-	@Prop({ default:'s' })size!: Width
+
+	@Prop({ default:'s' })size!: ModalWidth
   
 	close(){
 		this.$emit('close')
