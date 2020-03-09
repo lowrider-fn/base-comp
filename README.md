@@ -18,12 +18,18 @@ npm run build
 
 #### Modal
 ```ts
-type Width = 's' | 'm' | 'l' | 'fit'
+enum ModalWidth{
+	s='s',
+	m='m',
+	l='l',
+	fit='fit'
+}
 
 interface Props {
-	isShow: boolean
 	title?: string
-	size?: Width
+
+	size?: ModalWidth
+
 	onClose: () => void
 	scopedSlots?: {
 		head?: () => VNode
@@ -31,11 +37,15 @@ interface Props {
 		bottom?: () => VNode
 	}
 }
+
+@Prop() title!: Props['title']
+
+@Prop({ default:'s' })size!: ModalWidth
 ```
 
 ```tsx
 import { Component, Vue } from 'vue-property-decorator'
-import { Modal } from '@/components/modal'
+import { Modal,ModalWidth } from '@/components/modal'
 
 @Component
 export default class App extends Vue {
@@ -81,8 +91,8 @@ export default class App extends Vue {
 		return (
 			this.isShow && (
 				<Modal
+					size={ModalWidth.m}
 					title={'Заголовок или scopedSlots.head?.({})'}
-					isShow={this.isShow}
 					onClose={this.toggleIsShow}
 					scopedSlots={{
 						body: () => this.body(),
@@ -120,6 +130,16 @@ interface Props {
 	onChange?: (e: number|string) => void
 	onClose?: () => void
 }
+
+@Prop({ default:false }) disabled!: boolean
+
+@Prop() label!: Props['label']
+@Prop() placeholder!: Props['placeholder']
+@Prop() options!: Props['options']
+@Prop() selected!: Props['selected']
+@Prop() error!: Props['error']
+
+@Prop({ default:FieldSize.l }) size!: FieldSize
 ```
 
 ```tsx
@@ -196,6 +216,20 @@ interface Props {
 	onClick?: (e?: Event) => void
 	onMousedown?: (e?: Event) => void
 }
+
+@Prop({ default:false }) isDirty!: boolean
+@Prop({ default:false }) readonly!: boolean
+@Prop({ default:false }) disabled!: boolean
+
+@Prop({ default:'text' }) type!: string
+@Prop() label!: Props['label']
+@Prop() placeholder!: Props['placeholder']
+@Prop() error!: Props['error']
+@Prop() value!: Props['value']
+
+@Prop({ default:FieldTag.input }) tag!: FieldTag
+@Prop({ default: FieldSize.l }) size!: FieldSize
+@Prop() iMask!: Props['iMask']
 ```
 
 ```tsx
