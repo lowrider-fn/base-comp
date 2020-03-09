@@ -1,16 +1,7 @@
 import { Component } from 'vue-property-decorator'
 
 import { VueComponent } from '@/shims-vue'
-
-export const clickOutside={
-	init(context: VueComponent,call: () => void){
-		context.$el.addEventListener('mousedown',(e: Event)=> e.stopPropagation())
-		document && document.addEventListener('mousedown', call)
-	},
-	destroy(call: () => void){
-		document && document.removeEventListener('mousedown', call)
-	},
-}
+import clickOutside  from '@/components/click-outside'
 
 interface Props {
 	onClose?: () => void
@@ -25,11 +16,11 @@ export class Popup extends VueComponent<Props> {
 	}
 
 	destroyed() {
-		clickOutside.destroy(this.close)
+		clickOutside.destroy()
 	}
 
 	mounted( ) {
-		clickOutside.init(this,this.close)
+		clickOutside.init(this.$el,this.close)
 	}
 
 	render()  {
