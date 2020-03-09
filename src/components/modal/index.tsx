@@ -30,7 +30,7 @@ export class Modal extends VueComponent<Props> {
 
 	@Prop() title!: Props['title']
 
-	@Prop({ default:'s' })size!: ModalWidth
+	@Prop({ default: ModalWidth.s })size!: ModalWidth
   
 	close(){
 		this.$emit('close')
