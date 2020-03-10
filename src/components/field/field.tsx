@@ -123,15 +123,15 @@ export class Field extends VueComponent<Props> {
 				{this.label && (
 					<label
 						class={[styles.label,
-							{ [styles.xlFocused]:this.isXl && this.isFocused },
+							{ [styles.xlFocused]:this.isXl && (this.isFocused || this.maskedValue(this.value)  && !this.isFocused) },
 						]}
 						// eslint-disable-next-line react/no-unknown-property
-						for={!this.isXl && this.id}
+						for={this.id}
 					>
 						{this.label}
 					</label>
 				)}
-				<div class={styles.fieldBox}>
+				<div class={styles.fieldBox} onMousedown={(e: Event)=>this.$emit('mousedown',e)}>
 					{
 						this.$createElement(this.tag, {
 							ref: 'input',
@@ -145,7 +145,6 @@ export class Field extends VueComponent<Props> {
 								focus:(e: Event)=>this.focusHandler(e),
 								blur:(e: Event)=> this.blurHandler(e),
 								click:(e: Event)=>this.$emit('click',e),
-								mousedown:(e: Event)=>this.$emit('mousedown',e),
 							},
 							attrs: {
 							
