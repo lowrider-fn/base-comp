@@ -27,10 +27,38 @@ module.exports = {
 		'plugin:react/recommended',
 	],
 	rules: {
-		'react/jsx-one-expression-per-line': 'off',
-		'react/jsx-max-depth': ['warn', {
-			max: 1,
+		'react/jsx-one-expression-per-line': 0,
+		'react/jsx-max-depth'              : ['warn', {
+			max: 5,
 		}],
+
+		'react/jsx-curly-spacing': [2, 'always'],	
+
+		'key-spacing': ['error', {
+			'singleLine': {
+				'beforeColon': false,
+				'afterColon' : true,
+			},
+			'multiLine': {
+				'beforeColon': false,
+				'afterColon' : true,
+				'align'      : 'colon',
+			},
+		}],
+
+		'space-before-blocks': [2, 'always'],
+		
+		'arrow-spacing': [2, { 
+			'before': true, 
+			'after' : true, 
+		}],
+
+		'comma-spacing': [2, { 
+			'before': false, 
+			'after' : true, 
+		}],	
+
+		'space-infix-ops': [2, { 'int32Hint': false }],	
 		"no-multiple-empty-lines":[ 
 			1,
 			{ 
